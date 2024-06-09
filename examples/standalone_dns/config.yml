@@ -5,16 +5,16 @@ probes:
       - vodka
 
     groups:
-      - name: public_dns
+      - name: bKash DNS
         hosts:
-          - host: 8.8.8.8
-            name: Google
+          - host: 104.18.30.253
+            name: bkash.com
             color: red
-          - host: 4.2.2.1
-            name: Level(3)
+          - host: 18.140.105.62
+            name: business.bkash.com
             color: blue
-          - host: 208.67.222.222
-            name: OpenDNS
+          - host: 18.164.144.7
+            name: payment.bkash.com
             color: orange
 
 plugins:
@@ -54,7 +54,6 @@ plugins:
             plot_y: avg
 
     plugins:
-
       - name: http
         type: flask
         bind: 0.0.0.0:7021
@@ -63,22 +62,21 @@ plugins:
         server: self
         async: thread
         routes:
-          /targets : graphsrv->targets
-          /graph_data :
+          /targets: graphsrv->targets
+          /graph_data:
             methods:
               - POST
               - GET
             target: graphsrv->graph_data
-          /graph : graphsrv->graph_view
-          /overview_read_file : graphsrv->overview_read_file
+          /graph: graphsrv->graph_view
+          /overview_read_file: graphsrv->overview_read_file
           /: graphsrv->overview_view
-
 
 logging:
   version: 1
   formatters:
     simple:
-      format: '%(asctime)s - %(name)s - %(levelname)s: %(message)s'
+      format: "%(asctime)s - %(name)s - %(levelname)s: %(message)s"
   handlers:
     console:
       class: logging.StreamHandler
@@ -103,4 +101,3 @@ logging:
       handlers:
         - console
         #- file
-
